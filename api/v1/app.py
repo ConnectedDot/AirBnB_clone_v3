@@ -1,38 +1,45 @@
 #!/usr/bin/python3
+"""
+app
+"""
 
-"""Flask application"""
 from flask import Flask, jsonify
-from models import storage
-import os
-from api.v1.views import app_views
 from flask_cors import CORS
+from os import getenv
 
-# initialize a new flask application
+from api.v1.views import app_views
+from models import storage
+
+
 app = Flask(__name__)
-CORS(app, resources={"/*": {"origins": "0.0.0.0"}})   # enable CORS in flask
-# register our blueprint
+
+CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
+
 app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def shutdown_session(exception=None):
-    """perform cleanup when app is shutdown"""
+def teardown(exception):
+    """
+    teardown function
+    """
     storage.close()
 
 
 @app.errorhandler(404)
-def not_found_error(err):
-    return jsonify({"error": "Not found"}), 404
+def handle_404(exception):
+    """
+    handles 404 error
+    :return: returns 404 json
+    """
+    data = {
+        "error": "Not found"
+    }
 
+    resp = jsonify(data)
+    resp.status_code = 404
+
+    return(resp)
 
 if __name__ == "__main__":
-    try:
-        host_conn = os.getenv("HBNB_API_HOST")
-        if host_conn is None:
-            host_conn = "0.0.0.0"
-        port_conn = os.getenv("HBNB_API_PORT")
-        if port_conn is None:
-            port_conn = 5000
-    except Exception:
-        pass
-    app.run(host=host_conn, port=port_conn, threaded=True)
+    app.run(getenv("HBNB_API_HOST"), getenv("HBNB_API_PORT"))
