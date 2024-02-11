@@ -154,8 +154,9 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Theophilus Samuel - [Github](https://github.com/ConnectedDot) / 
+Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
+Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
-Third part of Airbnb: Akintola Olamilekan
+Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
